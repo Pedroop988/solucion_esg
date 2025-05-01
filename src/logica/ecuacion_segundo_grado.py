@@ -50,6 +50,9 @@ class EcuacionSegundoGrado:
         if d >= 0:
             r1 = (-self.b + math.sqrt(d)) / (2 * self.a)
             r2 = (-self.b - math.sqrt(d)) / (2 * self.a)
-            return r1, r2
         else:
-            return None, None
+            parteReal = -self.b / (2 * self.a)
+            parteImaginaria = math.sqrt(math.fabs(d)) / (2 * self.a)
+            r1 = complex(parteReal, parteImaginaria)
+            r2 = complex(parteReal, -parteImaginaria)
+        return r1, r2

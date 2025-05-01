@@ -1,7 +1,6 @@
 import unittest
 from src.logica.ecuacion_segundo_grado import EcuacionSegundoGrado
 
-
 class TestEcuacionSegundoGrado(unittest.TestCase):
 
     def test_solucionESG_parametrosNumericos_raicesReales(self):
@@ -12,10 +11,8 @@ class TestEcuacionSegundoGrado(unittest.TestCase):
         ecuacionSegundoGrado.c = 1
         RaizEsperada1 = 1.43
         RaizEsperada2 = 0.23
-
         # Do
         RaizActual1, RaizActual2 = ecuacionSegundoGrado.solucionESG()
-
         # Assert
         self.assertAlmostEqual(RaizEsperada1, RaizActual1, 2)
         self.assertAlmostEqual(RaizEsperada2, RaizActual2, 2)
@@ -32,7 +29,6 @@ class TestEcuacionSegundoGrado(unittest.TestCase):
             {"Case": "Caso 06", "a": 1, "b": 4, "c": 4, "RaizEsperada1": -2.00, "RaizEsperada2": -2.00},
             {"Case": "Caso 07", "a": 1, "b": 3, "c": 2, "RaizEsperada1": -1.00, "RaizEsperada2": -2.00},
         )
-
         # Do
         for item in items:
             with self.subTest(item["Case"]):
@@ -40,7 +36,22 @@ class TestEcuacionSegundoGrado(unittest.TestCase):
                 ecuacionSegundoGrado.b = item["b"]
                 ecuacionSegundoGrado.c = item["c"]
                 RaizActual1, RaizActual2 = ecuacionSegundoGrado.solucionESG()
-
                 # Assert
                 self.assertAlmostEqual(item["RaizEsperada1"], RaizActual1, 2)
                 self.assertAlmostEqual(item["RaizEsperada2"], RaizActual2, 2)
+
+    def test_solucionESG_parametrosNumericos_raicesComplejasConjugadas(self):
+        # Arrange
+        ecuacionSegundoGrado = EcuacionSegundoGrado()
+        ecuacionSegundoGrado.a = 1
+        ecuacionSegundoGrado.b = 2
+        ecuacionSegundoGrado.c = 3
+        raiz_esperada1 = complex(-1, 1.41)
+        raiz_esperada2 = complex(-1, -1.41)
+        # Do
+        raiz_actual1, raiz_actual2 = ecuacionSegundoGrado.solucionESG()
+        # Assert
+        self.assertAlmostEqual(raiz_esperada1.real, raiz_actual1.real, 2)
+        self.assertAlmostEqual(raiz_esperada1.imag, raiz_actual1.imag, 2)
+        self.assertAlmostEqual(raiz_esperada2.real, raiz_actual2.real, 2)
+        self.assertAlmostEqual(raiz_esperada2.imag, raiz_actual2.imag, 2)
